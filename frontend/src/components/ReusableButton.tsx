@@ -15,11 +15,7 @@ const ReusableButton: FC<ReusableButtonProps> = ({ to, children, ...rest }) => {
     );
   }
 
-  return (
-    <Button {...rest}>
-      {children}
-    </Button>
-  );
+  return <Button {...rest}>{children}</Button>;
 };
 
 export default ReusableButton;

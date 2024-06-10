@@ -9,7 +9,11 @@ interface BookCardProps {
   onRemoveFromReadingList?: (book: Book) => void;
 }
 
-const BookCard: FC<BookCardProps> = ({ book, onAddToReadingList, onRemoveFromReadingList }) => {
+const BookCard: FC<BookCardProps> = ({
+  book,
+  onAddToReadingList,
+  onRemoveFromReadingList,
+}) => {
   const handleAddToReadingList = () => {
     if (onAddToReadingList) {
       onAddToReadingList(book);
@@ -34,7 +38,13 @@ const BookCard: FC<BookCardProps> = ({ book, onAddToReadingList, onRemoveFromRea
         <Typography variant="h5" sx={{ marginBottom: '10px' }}>
           {book.title}
         </Typography>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
           <Typography variant="subtitle1" color="text.secondary">
             Author: {book.author}
           </Typography>
@@ -42,7 +52,7 @@ const BookCard: FC<BookCardProps> = ({ book, onAddToReadingList, onRemoveFromRea
             Reading Level: {book.readingLevel}
           </Typography>
         </Box>
-        {(onAddToReadingList || onRemoveFromReadingList) && (
+        {(onAddToReadingList ?? onRemoveFromReadingList) && (
           <>
             {onAddToReadingList && (
               <ReusableButton

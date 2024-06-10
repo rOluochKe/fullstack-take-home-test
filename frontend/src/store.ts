@@ -10,11 +10,13 @@ interface ReadingListState {
 
 export const useReadingListStore = create<ReadingListState>((set) => ({
   readingList: [],
-  addBook: (book: Book) => set((state) => ({
-    readingList: [...state.readingList, book],
-  })),
-  removeBook: (title: string) => set((state) => ({
-    readingList: state.readingList.filter((book) => book.title !== title),
-  })),
+  addBook: (book: Book) =>
+    set((state) => ({
+      readingList: [...state.readingList, book],
+    })),
+  removeBook: (title: string) =>
+    set((state) => ({
+      readingList: state.readingList.filter((book) => book.title !== title),
+    })),
   setReadingList: (books: Book[]) => set(() => ({ readingList: books })),
 }));

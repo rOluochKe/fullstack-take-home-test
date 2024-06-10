@@ -1,5 +1,16 @@
 import { FC, useState } from 'react';
-import { TextField, Popper, Paper, List, ListItem, Card, CardContent, Typography, CardMedia, Box } from '@mui/material';
+import {
+  TextField,
+  Popper,
+  Paper,
+  List,
+  ListItem,
+  Card,
+  CardContent,
+  Typography,
+  CardMedia,
+  Box,
+} from '@mui/material';
 import { Book, MediaQueryProps } from '../types/Types';
 import useMediaQueryComponent from '../hooks/UseMediaQuery';
 import ReusableButton from './ReusableButton';
@@ -10,12 +21,17 @@ interface SearchBarProps {
   onAddToReadingList: (book: Book) => void;
 }
 
-const SearchBar: FC<SearchBarProps> = ({ onSearch, suggestions, onAddToReadingList }) => {
+const SearchBar: FC<SearchBarProps> = ({
+  onSearch,
+  suggestions,
+  onAddToReadingList,
+}) => {
   const [query, setQuery] = useState<string>('');
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [popperVisible, setPopperVisible] = useState<boolean>(false);
 
-  const { isSmallScreen, isMediumScreen, isLargeScreen }: MediaQueryProps = useMediaQueryComponent();
+  const { isSmallScreen, isMediumScreen, isLargeScreen }: MediaQueryProps =
+    useMediaQueryComponent();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -38,7 +54,13 @@ const SearchBar: FC<SearchBarProps> = ({ onSearch, suggestions, onAddToReadingLi
 
   return (
     <form>
-      <Box width={getWidth()} margin="auto" display="flex" flexDirection="column" alignItems="center">
+      <Box
+        width={getWidth()}
+        margin="auto"
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+      >
         <TextField
           label="Search by Title"
           value={query}
@@ -46,8 +68,21 @@ const SearchBar: FC<SearchBarProps> = ({ onSearch, suggestions, onAddToReadingLi
           variant="outlined"
           sx={{ marginBottom: '20px', width: '100%' }}
         />
-        <Popper open={popperVisible} anchorEl={anchorEl} placement="bottom-start" style={{ zIndex: 9999, width: getWidth() }}>
-          <Paper style={{ maxHeight: '300px', overflowY: 'auto', width: getPaperWidth(), display: 'flex', justifyContent: 'center' }}>
+        <Popper
+          open={popperVisible}
+          anchorEl={anchorEl}
+          placement="bottom-start"
+          style={{ zIndex: 9999, width: getWidth() }}
+        >
+          <Paper
+            style={{
+              maxHeight: '300px',
+              overflowY: 'auto',
+              width: getPaperWidth(),
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
             {suggestions.length === 0 ? (
               <Typography variant="body1" sx={{ p: 2, textAlign: 'center' }}>
                 No matching books found.
@@ -64,7 +99,9 @@ const SearchBar: FC<SearchBarProps> = ({ onSearch, suggestions, onAddToReadingLi
                         sx={{ width: '15%' }}
                       />
                       <CardContent sx={{ flex: '1 0 auto' }}>
-                        <Typography variant="h6" sx={{ fontSize: '1rem' }}>{book.title}</Typography>
+                        <Typography variant="h6" sx={{ fontSize: '1rem' }}>
+                          {book.title}
+                        </Typography>
                         <Typography variant="subtitle1" color="text.secondary">
                           Author: {book.author}
                         </Typography>

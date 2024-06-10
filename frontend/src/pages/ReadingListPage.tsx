@@ -18,13 +18,17 @@ const ReadingListPage: FC = () => {
   const itemsPerPage = 12;
 
   useEffect(() => {
-    const storedReadingList = JSON.parse(localStorage.getItem('readingList') || '[]');
+    const storedReadingList = JSON.parse(
+      localStorage.getItem('readingList') ?? '[]'
+    ) as Book[];
     setReadingList(storedReadingList);
   }, [setReadingList]);
 
   const removeFromReadingList = (book: Book) => {
     removeBook(book.title);
-    setNotification(`Book "${book.title}" has been removed from the reading list.`);
+    setNotification(
+      `Book "${book.title}" has been removed from the reading list.`
+    );
   };
 
   const handleNotificationClose = () => {
@@ -40,26 +44,46 @@ const ReadingListPage: FC = () => {
 
   return (
     <>
-      <Grid container justifyContent="flex-start" alignItems="center" sx={{ marginBottom: '15px' }}>
+      <Grid
+        container
+        justifyContent="flex-start"
+        alignItems="center"
+        sx={{ marginBottom: '15px' }}
+      >
         <IconButton color="primary" onClick={() => navigate('/')}>
           <ArrowBackIcon fontSize="large" />
         </IconButton>
-        <Typography variant="body1" onClick={() => navigate('/')} sx={{ cursor: 'pointer' }}>
+        <Typography
+          variant="body1"
+          onClick={() => navigate('/')}
+          sx={{ cursor: 'pointer' }}
+        >
           Return to search
         </Typography>
       </Grid>
-      <Typography variant="h3" sx={{ marginBottom: '20px', textAlign: 'center' }}>
+      <Typography
+        variant="h3"
+        sx={{ marginBottom: '20px', textAlign: 'center' }}
+      >
         Reading List
       </Typography>
       {readingList.length === 0 ? (
-        <Typography variant="h6" color="text.secondary" sx={{ textAlign: 'center', marginTop: '20px' }}>
+        <Typography
+          variant="h6"
+          color="text.secondary"
+          sx={{ textAlign: 'center', marginTop: '20px' }}
+        >
           Your reading list is empty.
         </Typography>
       ) : (
         <>
           <Grid container spacing={2}>
             {displayedResults.map((book: Book, index) => (
-              <Grid key={index} item xs={isLargeScreen ? 4 : isMediumScreen ? 6 : 12}>
+              <Grid
+                key={index}
+                item
+                xs={isLargeScreen ? 4 : isMediumScreen ? 6 : 12}
+              >
                 <BookCard
                   book={book}
                   onRemoveFromReadingList={removeFromReadingList}
@@ -76,7 +100,10 @@ const ReadingListPage: FC = () => {
         </>
       )}
       {notification && (
-        <Notification message={notification} onClose={handleNotificationClose} />
+        <Notification
+          message={notification}
+          onClose={handleNotificationClose}
+        />
       )}
     </>
   );

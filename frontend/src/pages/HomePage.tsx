@@ -25,7 +25,7 @@ const Home: FC = () => {
   const { isLargeScreen, isMediumScreen } = useMediaQueryComponent();
 
   useEffect(() => {
-    if (data && data.books) {
+    if (data?.books) {
       setSearchResults(data.books);
     }
   }, [data]);
@@ -33,12 +33,13 @@ const Home: FC = () => {
   useEffect(() => {
     const storedReadingList = localStorage.getItem('readingList');
     if (storedReadingList) {
-      setReadingList(JSON.parse(storedReadingList));
+      const parsedReadingList = JSON.parse(storedReadingList) as Book[];
+      setReadingList(parsedReadingList);
     }
   }, [setReadingList]);
 
   const handleSearch = (query: string) => {
-    if (data && data.books) {
+    if (data?.books) {
       const filteredResults = data.books.filter((book: Book) =>
         book.title.toLowerCase().includes(query.toLowerCase())
       );
@@ -47,14 +48,23 @@ const Home: FC = () => {
   };
 
   const handleAddToReadingList = (book: Book) => {
-    const exists = readingList.some((item) => item.title.toLowerCase() === book.title.toLowerCase());
+    const exists = readingList.some(
+      (item) => item.title.toLowerCase() === book.title.toLowerCase()
+    );
 
     if (exists) {
-      setNotification(`Book "${book.title}" already exists in the reading list.`);
+      setNotification(
+        `Book "${book.title}" already exists in the reading list.`
+      );
     } else {
       addBook(book);
-      localStorage.setItem('readingList', JSON.stringify([...readingList, book]));
-      setNotification(`Book "${book.title}" has been added to the reading list.`);
+      localStorage.setItem(
+        'readingList',
+        JSON.stringify([...readingList, book])
+      );
+      setNotification(
+        `Book "${book.title}" has been added to the reading list.`
+      );
     }
   };
 
@@ -70,7 +80,10 @@ const Home: FC = () => {
 
   return (
     <>
-      <Typography variant="h3" sx={{ marginBottom: '20px', textAlign: 'center' }}>
+      <Typography
+        variant="h3"
+        sx={{ marginBottom: '20px', textAlign: 'center' }}
+      >
         Book Management System
       </Typography>
       <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
@@ -91,11 +104,18 @@ const Home: FC = () => {
       {loading && <Loader />}
       {error && <Typography>Error: {error.message}</Typography>}
       {notification && (
-        <Notification message={notification} onClose={handleNotificationClose} />
+        <Notification
+          message={notification}
+          onClose={handleNotificationClose}
+        />
       )}
       <Grid container spacing={2}>
         {displayedResults.map((book: Book, index) => (
-          <Grid key={index} item xs={isLargeScreen ? 4 : isMediumScreen ? 6 : 12}>
+          <Grid
+            key={index}
+            item
+            xs={isLargeScreen ? 4 : isMediumScreen ? 6 : 12}
+          >
             <BookCard book={book} onAddToReadingList={handleAddToReadingList} />
           </Grid>
         ))}
