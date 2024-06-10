@@ -4,3 +4,9 @@ export interface Book {
   coverPhotoURL: string;
   readingLevel: string;
 }
+
+export interface MediaQueryProps {
+  isSmallScreen: boolean;
+  isMediumScreen: boolean;
+  isLargeScreen: boolean;
+}
