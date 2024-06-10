@@ -7,6 +7,7 @@ import Loader from '../components/Loader';
 import Notification from '../components/Notification';
 import Pagination from '../components/Pagination';
 import ReusableButton from '../components/ReusableButton';
+import SearchBar from '../components/SearchBar';
 import { Book } from '../types/Types';
 import { GET_BOOKS } from '../queries';
 import useMediaQueryComponent from '../hooks/UseMediaQuery';
@@ -35,6 +36,15 @@ const Home: FC = () => {
       setReadingList(JSON.parse(storedReadingList));
     }
   }, [setReadingList]);
+
+  const handleSearch = (query: string) => {
+    if (data && data.books) {
+      const filteredResults = data.books.filter((book: Book) =>
+        book.title.toLowerCase().includes(query.toLowerCase())
+      );
+      setSearchResults(filteredResults);
+    }
+  };
 
   const handleAddToReadingList = (book: Book) => {
     const exists = readingList.some((item) => item.title.toLowerCase() === book.title.toLowerCase());
@@ -73,7 +83,11 @@ const Home: FC = () => {
           My reading list
         </ReusableButton>
       </Box>
-
+      <SearchBar
+        onSearch={handleSearch}
+        suggestions={searchResults}
+        onAddToReadingList={handleAddToReadingList}
+      />
       {loading && <Loader />}
       {error && <Typography>Error: {error.message}</Typography>}
       {notification && (
